@@ -18,6 +18,9 @@ def main(argv):
     argParser.add_argument("--insert", action="store_true")
     argParser.add_argument("--print", action="store_true")
     argParser.add_argument("--purgedb", action="store_true")
+    argParser.add_argument("--searchname")
+    argParser.add_argument("--searchage", type=int)
+
     args = argParser.parse_args()
 
     # init db
@@ -43,6 +46,28 @@ def main(argv):
     if (args.purgedb):
         print("purging database...")
         db.purge_table('people')
+
+    if (args.searchname):
+        # search db for value
+        Person = Query()
+        res = people.search(Person.name == args.searchname)
+        i = 0
+        for r in res:
+            i = i + 1
+            name = r.get('name')
+            age = r.get('age')
+            print ("{} - name: [{}] | age: [{}]".format(i, name, age))
+
+    if (args.searchage):
+        # search db for people of given age
+        Person = Query()
+        res = people.search(Person.age == args.searchage)
+        i = 0
+        for r in res:
+            i = i + 1
+            name = r.get('name')
+            age = r.get('age')
+            print ("{} - name: [{}] | age: [{}]".format(i, name, age))
 
 
 if __name__ == "__main__":
