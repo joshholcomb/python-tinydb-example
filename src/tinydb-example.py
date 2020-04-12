@@ -3,17 +3,18 @@ import sys
 import argparse
 import json
 
-def getUserInput():
-    # get name from user input
-    name = input("enter name: ") 
-    # get age from user input
-    age = int(input("enter age: "))
 
+#
+# function to retrieve input from user
+#
+def getUserInput():
+    name = input("enter name: ") 
+    age = int(input("enter age: "))
     return(name, age)
 
-def main(argv):
 
-    # command line arguments
+def main(argv):
+    # setup command line arguments
     argParser = argparse.ArgumentParser()
     argParser.add_argument("--insert", action="store_true")
     argParser.add_argument("--print", action="store_true")
@@ -33,7 +34,7 @@ def main(argv):
         people.insert({'name': name, 'age': age})
 
     if (args.print):
-        # print table contents
+        # print the contents of the people table
         dbSize = len(people)
         print ("table has [{}] values".format(dbSize))
         i = 0
@@ -44,6 +45,7 @@ def main(argv):
             print ("{} - name: [{}] | age: [{}]".format(i, name, age))
         
     if (args.purgedb):
+        # purge database
         print("purging database...")
         db.purge_table('people')
 
